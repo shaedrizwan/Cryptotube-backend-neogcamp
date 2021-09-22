@@ -209,6 +209,32 @@ router.route('/playlist')
         }
     })
 
+router.route('/isLiked')
+    .post(async(req,res)=>{
+        const userId = req.user
+        const {videoId} = req.body
+        const user = await User.findById(userId)
+        const isLiked = user.likedvideos.find(video => String(video._id) === videoId)
+        if(isLiked){
+            res.json({success:true,isLiked:true})
+        }else{
+            res.json({success:true,isLiked:false})
+        }
+    })
+
+    router.route('/isAddedToWatchlater')
+    .post(async(req,res)=>{
+        const userId = req.user
+        const {videoId} = req.body
+        const user = await User.findById(userId)
+        const isAddedToWatchlater = user.watchlater.find(video => String(video._id) === videoId)
+        if(isAddedToWatchlater){
+            res.json({success:true,isAddedToWatchlater:true})
+        }else{
+            res.json({success:true,isAddedToWatchlater:false})
+        }
+    })
+
 
 
 
